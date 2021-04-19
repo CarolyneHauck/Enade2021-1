@@ -78,7 +78,7 @@ public class ProvaResource {
     public String Excluir(@PathParam("codigo") Integer codigo) {
         try {
             Prova prova = new Prova(codigo);
-            //ProvaDao.getInstance().remover(prova);
+            ProvaDao.getInstance().remover(codigo);
             return "Registro excluido com sucesso";
         }catch (Exception e) {
             return "Erro ao excluir o registro:" + e.getMessage();

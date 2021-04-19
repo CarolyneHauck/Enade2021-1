@@ -30,12 +30,14 @@ public class TipoQuestaoResource {
         List<TipoQuestao> tipoQuestao = TipoQuestaoDAO.getInstance().buscarTodas();
         return tipoQuestao;
     }
+
     @GET
     @Produces("application/json; charset=UTF-8")
     @Path("/getTipoQuestao/{codigo}")
     public TipoQuestao GetTipoQuestao(@PathParam("codigo") int codigo) {
         return TipoQuestaoDAO.getInstance().buscar(codigo);
     }
+
     @DELETE
     @Produces("application/json; charset=UTF-8")
     @Path("/excluir/{codigo}")

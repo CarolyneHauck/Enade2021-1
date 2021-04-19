@@ -62,7 +62,7 @@ public class TipoUsuarioResource {
     public String Excluir(@PathParam("codigo") int codigo) {
         try {
             TipoUsuario tipoUsuario = new TipoUsuario(codigo);
-            //TipoUsuarioDao.getInstance().remover(tipoUsuario);
+            TipoUsuarioDao.getInstance().remover(codigo);
             return "Registro excluido com sucesso";
         }catch (Exception e) {
             return "Erro ao excluir o registro:" + e.getMessage();
