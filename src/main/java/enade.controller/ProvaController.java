@@ -6,7 +6,7 @@
 
 package enade.controller;
 
-import enade.dao.ProvaDao;;
+import enade.dao.ProvaDao;
 import enade.model.Prova;
 import java.io.Serializable;
 import java.util.ArrayList;

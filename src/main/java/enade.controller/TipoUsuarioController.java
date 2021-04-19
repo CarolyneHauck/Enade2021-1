@@ -6,7 +6,7 @@
 
 package enade.controller;
 
-import enade.dao.TipoUsuarioDao;;
+import enade.dao.TipoUsuarioDao;
 import enade.model.TipoUsuario;
 import java.io.Serializable;
 import java.util.ArrayList;

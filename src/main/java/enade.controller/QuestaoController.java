@@ -6,7 +6,7 @@
 
 package enade.controller;
 
-import enade.dao.QuestaoDao;;
+import enade.dao.QuestaoDao;
 import enade.model.Questao;
 import java.io.Serializable;
 import java.util.ArrayList;
