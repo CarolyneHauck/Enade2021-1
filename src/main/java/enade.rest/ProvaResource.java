@@ -22,7 +22,7 @@ import enade.model.Prova;
 /**
  *
  * @author carolyne.carreira
- */
+
 
 @Path("prova")
 public class ProvaResource {
@@ -91,3 +91,4 @@ public class ProvaResource {
         return Response.ok("ping").build();
     }
 }
+ */

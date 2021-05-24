@@ -7,7 +7,7 @@ import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.7.7.v20200504-rNA", date="2021-04-19T17:08:10")
+@Generated(value="EclipseLink-2.7.7.v20200504-rNA", date="2021-05-24T19:18:22")
 @StaticMetamodel(Questao.class)
 public class Questao_ { 
 
@@ -20,7 +20,7 @@ public class Questao_ {
     public static volatile SingularAttribute<Questao, TipoQuestao> tipoQuestaoidtipoQuestao;
     public static volatile SingularAttribute<Questao, Integer> idQuestao;
     public static volatile SingularAttribute<Questao, String> descricaoQuestao;
-    public static volatile SingularAttribute<Questao, Short> estadoQuestao;
+    public static volatile SingularAttribute<Questao, Boolean> estadoQuestao;
     public static volatile SingularAttribute<Questao, Character> questaoCorreta;
 
 }

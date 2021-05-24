@@ -22,7 +22,7 @@ import enade.model.Questao;
 /**
  *
  * @author carolyne.carreira
- */
+
 @Path("questao")
 public class QuestaoResource {
 
@@ -99,3 +99,4 @@ public class QuestaoResource {
     }
 }
 
+*/

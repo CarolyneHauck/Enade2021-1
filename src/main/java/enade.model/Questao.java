@@ -17,7 +17,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -45,7 +46,7 @@ public class Questao implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idQuestao")
     private Integer idQuestao;
     @Size(max = 45)
@@ -69,7 +70,7 @@ public class Questao implements Serializable {
     @Column(name = "questaoCorreta")
     private Character questaoCorreta;
     @Column(name = "estadoQuestao")
-    private Short estadoQuestao;
+    private boolean estadoQuestao;
     @ManyToMany(mappedBy = "questaoList")
     private List<Prova> provaList;
     @JoinColumn(name = "TipoQuestao_idtipoQuestao", referencedColumnName = "idtipoQuestao")
@@ -81,6 +82,11 @@ public class Questao implements Serializable {
 
     public Questao(Integer idQuestao) {
         this.idQuestao = idQuestao;
+    }
+
+    public Questao(Integer idQuestao, String descricaoQuestao) {
+	this.idQuestao = idQuestao;
+	this.descricaoQuestao = descricaoQuestao;
     }
 
     public Integer getIdQuestao() {
@@ -147,11 +153,11 @@ public class Questao implements Serializable {
         this.questaoCorreta = questaoCorreta;
     }
 
-    public Short getEstadoQuestao() {
+    public boolean getEstadoQuestao() {
         return estadoQuestao;
     }
 
-    public void setEstadoQuestao(Short estadoQuestao) {
+    public void setEstadoQuestao(boolean estadoQuestao) {
         this.estadoQuestao = estadoQuestao;
     }
 
@@ -194,7 +200,7 @@ public class Questao implements Serializable {
 
     @Override
     public String toString() {
-        return "br.edu.uniacademia.enade2021.model.Questao[ idQuestao=" + idQuestao + " ]";
+        return "model.Questao[ idQuestao=" + idQuestao + " ]";
     }
     
 }

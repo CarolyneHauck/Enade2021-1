@@ -11,37 +11,37 @@ import enade.model.TipoUsuario;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+
 import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 /**
  *
  * @author carolyne.carreira
  */
-@ManagedBean(name = "TipoUsuarioBean")
+@Named
 @ViewScoped
 public class TipoUsuarioController implements Serializable {
 
-    private TipoUsuario tipoUsuario = new TipoUsuario();
-    TipoUsuarioDao tipoUsuarioDao;
-    private List tipoUsuarios = new ArrayList();
-    
-    public TipoUsuarioController(){
-        tipoUsuarioDao =  new TipoUsuarioDao();
-        tipoUsuarios = tipoUsuarioDao.buscarTodos();
-    }
-    
-    public void record(ActionEvent actionEvent) {
-        tipoUsuarioDao.atualizar(this.getTipoUsuario());
-        setTipoUsuarios(tipoUsuarioDao.buscarTodos());
-        setTipoUsuario(new TipoUsuario());
+    TipoUsuario tipoUsuario = new TipoUsuario();
+    List<TipoUsuario> tipoUsuarios = new ArrayList<>();
+
+    public TipoUsuarioController() {
+        tipoUsuarios = TipoUsuarioDao.getInstance().buscarTodas();
+        tipoUsuario = new TipoUsuario();
     }
 
-    public void exclude(ActionEvent actionEvent) {
-        tipoUsuarioDao.remover(getTipoUsuario().getIdtipoUsuario());
-        setTipoUsuarios(tipoUsuarioDao.buscarTodos());
-        setTipoUsuario(new TipoUsuario());
+    public void gravar(ActionEvent actionEvent) {
+        TipoUsuarioDao.getInstance().atualizar(tipoUsuario);
+        tipoUsuarios = TipoUsuarioDao.getInstance().buscarTodas();
+        tipoUsuario = new TipoUsuario();
+    }
+
+    public void remover(ActionEvent actionEvent) {
+        TipoUsuarioDao.getInstance().remover(tipoUsuario);
+        tipoUsuarios = TipoUsuarioDao.getInstance().buscarTodas();
+        tipoUsuario = new TipoUsuario();
     }
 
     public TipoUsuario getTipoUsuario() {

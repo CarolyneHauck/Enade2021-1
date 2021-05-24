@@ -11,36 +11,37 @@ import enade.model.Prova;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+
 import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 /**
  *
  * @author carolyne.carreira
  */
-@ManagedBean(name = "ProvaBean")
+@Named
 @ViewScoped
 public class ProvaController implements Serializable {
-    private Prova prova = new Prova();
-    ProvaDao provaDao;
-    private List provas = new ArrayList();
-    
-    public ProvaController(){
-        provaDao =  new ProvaDao();
-        provas = provaDao.buscarTodos();
-    }
-    
-    public void record(ActionEvent actionEvent) {
-        provaDao.atualizar(this.getProva());
-        setProvas(provaDao.buscarTodos());
-        setProva(new Prova());
+
+    Prova prova = new Prova();
+    List<Prova> provas = new ArrayList<>();
+
+    public ProvaController() {
+        provas = ProvaDao.getInstance().buscarTodas();
+        prova = new Prova();
     }
 
-    public void exclude(ActionEvent actionEvent) {
-        provaDao.remover(getProva().getIdProva());
-        setProvas(provaDao.buscarTodos());
-        setProva(new Prova());
+    public void gravar(ActionEvent actionEvent) {
+        ProvaDao.getInstance().atualizar(prova);
+        provas = ProvaDao.getInstance().buscarTodas();
+        prova = new Prova();
+    }
+
+    public void remover(ActionEvent actionEvent) {
+        ProvaDao.getInstance().remover(prova);
+        provas = ProvaDao.getInstance().buscarTodas();
+        prova = new Prova();
     }
 
     public Prova getProva() {

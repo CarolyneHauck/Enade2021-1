@@ -23,6 +23,7 @@ import enade.model.TipoQuestao;
  */
 @Path("tipoquestao")
 public class TipoQuestaoResource {
+
     @GET
     @Produces("application/json; charset=UTF-8")
     @Path("/todosTipoQuestao")
@@ -31,11 +32,37 @@ public class TipoQuestaoResource {
         return tipoQuestao;
     }
 
-    @GET
+    //OK
+    @POST
+    @Consumes("application/json; charset=UTF-8")
     @Produces("application/json; charset=UTF-8")
-    @Path("/getTipoQuestao/{codigo}")
-    public TipoQuestao GetTipoQuestao(@PathParam("codigo") int codigo) {
-        return TipoQuestaoDAO.getInstance().buscar(codigo);
+    @Path("/cadastrar")
+    public String Cadastrar(TipoQuestao tipoQuestao) {
+                
+        TipoQuestao tp = new TipoQuestao();
+        try {
+            tp.setIdtipoQuestao(tipoQuestao.getIdtipoQuestao());
+            tp.setNomeTipoQuestao(tipoQuestao.getNomeTipoQuestao());
+            TipoQuestaoDAO.getInstance().persistir(tp);
+            return "Registro cadastrado com sucesso!";
+        } catch (Exception e) {
+            return "Erro ao cadastrar um registro " + e.getMessage();
+        }
+    }
+
+    @PUT
+    @Consumes("application/json; charset=UTF-8")
+    @Produces("application/json; charset=UTF-8")
+    @Path("/alterar")
+    public String Alterar(TipoQuestao tipoQuestao) {
+        TipoQuestao tp = new TipoQuestao();
+        try {
+            tp.setIdtipoQuestao(tipoQuestao.getIdtipoQuestao());
+            tp.setNomeTipoQuestao(tipoQuestao.getNomeTipoQuestao());
+            return TipoQuestaoDAO.getInstance().atualizar(tp).toString();
+        } catch (Exception e) {
+            return "Erro ao cadastrar um registro " + e.getMessage();
+        }
     }
 
     @DELETE
@@ -45,42 +72,12 @@ public class TipoQuestaoResource {
         try {
             TipoQuestao tipoQuestao = new TipoQuestao(codigo);
             TipoQuestaoDAO.getInstance().remover(tipoQuestao);
-            return "Registro excluido com sucesso";
-        }catch (Exception e) {
-            return "Erro ao excluir o registro:" + e.getMessage();
+            return "Registro excluido com sucesso!";
+        } catch (Exception e) {
+            return "Erro ao excluir o registro! " + e.getMessage();
         }
     }
-    
-    @POST
-    @Consumes("application/json; charset=UTF-8")
-    @Produces("application/json; charset=UTF-8")
-    @Path("/cadastrar")
-    public String Cadastrar(TipoQuestao tipoQuestao) {
-        TipoQuestao tq = new TipoQuestao();
-        try {
-            tq.setNomeTipoQuestao(tipoQuestao.getNomeTipoQuestao());
-            TipoQuestaoDAO.getInstance().persistir(tq);
-            return "Registro cadastrado com sucesso";
-        }catch (Exception e) {
-            return "Erro ao cadastrar o registro:" + e.getMessage();
-        }
-    }
-    
-    @PUT
-    @Consumes("application/json; charset=UTF-8")
-    @Produces("application/json; charset=UTF-8")
-    @Path("/alterar")
-    public String Alterar(TipoQuestao tipoQuestao) {
-        TipoQuestao tq = new TipoQuestao();
-        try {
-            tq.setIdtipoQuestao(tipoQuestao.getIdtipoQuestao());
-            tq.setNomeTipoQuestao(tipoQuestao.getNomeTipoQuestao());
-            return TipoQuestaoDAO.getInstance().atualizar(tq).toString();
-        }catch (Exception e) {
-            return "Erro ao atualizar o registro:" + e.getMessage();
-        }
-    }
-    
+
     @GET
     public Response ping(){
         return Response.ok("ping").build();

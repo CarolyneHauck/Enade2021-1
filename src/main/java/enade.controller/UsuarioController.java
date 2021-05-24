@@ -11,37 +11,41 @@ import enade.model.Usuario;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+
 import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
+import javax.inject.Named;
+import org.primefaces.event.CellEditEvent;
+import org.primefaces.event.RowEditEvent;
 
 /**
  *
  * @author carolyne.carreira
  */
-@ManagedBean(name = "UsuarioBean")
+@Named
 @ViewScoped
 public class UsuarioController implements Serializable {
 
-    private Usuario usuario = new Usuario();
-    UsuarioDao usuarioDao;
-    private List usuarios = new ArrayList();
-    
-    public UsuarioController(){
-        usuarioDao =  new UsuarioDao();
-        usuarios = usuarioDao.buscarTodos();
+    Usuario usuario = new Usuario();
+    List<Usuario> usuarios = new ArrayList<>();
+
+    public UsuarioController() {
+        usuarios = UsuarioDao.getInstance().buscarTodas();
+        usuario = new Usuario();
     }
 
-    public void record(ActionEvent actionEvent) {
-        usuarioDao.atualizar(this.getUsuario());
-        setUsuarios(usuarioDao.buscarTodos());
-        setUsuario(new Usuario());
+    public void gravar(ActionEvent actionEvent) {
+        UsuarioDao.getInstance().atualizar(usuario);
+        usuarios = UsuarioDao.getInstance().buscarTodas();
+        usuario = new Usuario();
     }
 
-    public void exclude(ActionEvent actionEvent) {
-        usuarioDao.remover(getUsuario().getIdUsuario());
-        setUsuarios(usuarioDao.buscarTodos());
-        setUsuario(new Usuario());
+    public void remover(ActionEvent actionEvent) {
+        UsuarioDao.getInstance().remover(usuario);
+        usuarios = UsuarioDao.getInstance().buscarTodas();
+        usuario = new Usuario();
     }
 
     public Usuario getUsuario() {
@@ -59,4 +63,19 @@ public class UsuarioController implements Serializable {
     public void setUsuarios(List<Usuario> usuarios) {
         this.usuarios = usuarios;
     }
+
+    public void onRowEdit(RowEditEvent event) {
+        Usuario q = (Usuario) event.getObject();
+        UsuarioDao.getInstance().atualizar(q);
+        usuarios = UsuarioDao.getInstance().buscarTodas();
+        usuario = new Usuario();
+        FacesMessage msg = new FacesMessage("Editado", q.getIdUsuario().toString());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+    public void onRowCancel(RowEditEvent<Usuario> event) {
+        FacesMessage msg = new FacesMessage("Cancelado", event.getObject().getIdUsuario().toString());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
 }

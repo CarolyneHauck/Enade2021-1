@@ -3,26 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package enade.dao;
 
+import enade.model.Questao;
 import enade.util.PersistenceUtil;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import enade.model.Questao;
 
 /**
  *
- * @author carolyne.
-public class ProvaDcarreira
+ * @author carolyne.carreira
  */
-public class QuestaoDao extends GenericDao<Questao, Integer>{
-
-    public QuestaoDao(){
-        super(Questao.class);
-    }
+public class QuestaoDao {
 
     public static QuestaoDao questaoDao;
 
@@ -32,5 +25,64 @@ public class QuestaoDao extends GenericDao<Questao, Integer>{
         }
         return questaoDao;
     }
-}
 
+    public Questao buscar(int codigo) {
+        EntityManager em = PersistenceUtil.getEntityManager();
+        Query query = em.createQuery("select t from Questao t where t.idQuestao =:id ");
+        query.setParameter("id", codigo);
+
+        List<Questao> questao = query.getResultList();
+        if (questao != null && questao.size() > 0) {
+            return questao.get(0);
+        }
+
+        return null;
+    }
+
+    public List<Questao> buscarTodas() {
+        EntityManager em = PersistenceUtil.getEntityManager();
+        Query query = em.createQuery("from Questao t");
+        return query.getResultList();
+    }
+
+    public void remover(Questao questao) {
+        EntityManager em = PersistenceUtil.getEntityManager();
+        em.getTransaction().begin();
+        em.remove(questao);
+        em.getTransaction().commit();
+    }
+
+    public Questao atualizar(Questao questao) {
+        System.out.println(questao);
+        EntityManager em = PersistenceUtil.getEntityManager();
+        em.getTransaction().begin();
+        try {
+            questao = em.merge(questao);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            e.printStackTrace();
+        }
+        return questao;
+    }
+
+    public void persistir(Questao questao) {
+        EntityManager em = PersistenceUtil.getEntityManager();
+        em.getTransaction().begin();
+        try {
+            em.persist(questao);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void removeAll() {
+        EntityManager em = PersistenceUtil.getEntityManager();
+        em.getTransaction().begin();
+        Query query = em.createQuery("delete from Questao");
+        query.executeUpdate();
+        em.getTransaction().commit();
+    }
+
+}

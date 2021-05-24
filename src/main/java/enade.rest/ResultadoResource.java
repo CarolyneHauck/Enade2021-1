@@ -22,7 +22,7 @@ import enade.model.Resultado;
 /**
  *
  * @author carolyne.carreira
- */
+
 @Path("resultado")
 public class ResultadoResource {
 
@@ -84,3 +84,4 @@ public class ResultadoResource {
     }
     
 }
+ */

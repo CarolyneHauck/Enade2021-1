@@ -16,19 +16,19 @@ import enade.util.PersistenceUtil;
  * @author carolyne.carreira
  */
 public class TipoQuestaoDAO {
-    
-    public static TipoQuestaoDAO tipoQuestaoDao;
+
+    public static TipoQuestaoDAO tipoQuestaoDAO;
 
     public static TipoQuestaoDAO getInstance() {
-        if (tipoQuestaoDao == null) {
-            tipoQuestaoDao = new TipoQuestaoDAO();
+        if (tipoQuestaoDAO == null) {
+            tipoQuestaoDAO = new TipoQuestaoDAO();
         }
-        return tipoQuestaoDao;
+        return tipoQuestaoDAO;
     }
 
     public TipoQuestao buscar(int codigo) {
         EntityManager em = PersistenceUtil.getEntityManager();
-        Query query = em.createQuery("select t from TipoQuestao t where t.idTipoQuestao =:id");
+        Query query = em.createQuery("select t from TipoQuestao t where t.idtipoQuestao =:id ");
         query.setParameter("id", codigo);
 
         List<TipoQuestao> tipoQuestao = query.getResultList();
@@ -41,7 +41,7 @@ public class TipoQuestaoDAO {
 
     public List<TipoQuestao> buscarTodas() {
         EntityManager em = PersistenceUtil.getEntityManager();
-        Query query = em.createQuery("from TipoQuestao As t");
+        Query query = em.createQuery("from TipoQuestao t");
         return query.getResultList();
     }
 
@@ -67,12 +67,12 @@ public class TipoQuestaoDAO {
         }
         return tipoQuestao;
     }
-    
+
     public void persistir(TipoQuestao tipoQuestao) {
         EntityManager em = PersistenceUtil.getEntityManager();
         em.getTransaction().begin();
         try {
-            em.merge(tipoQuestao);
+            em.persist(tipoQuestao);
             em.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -82,7 +82,7 @@ public class TipoQuestaoDAO {
     public void removeAll() {
         EntityManager em = PersistenceUtil.getEntityManager();
         em.getTransaction().begin();
-        Query query = em.createQuery(" delete from TipoQuestao ");
+        Query query = em.createQuery("delete from TipoQuestao");
         query.executeUpdate();
         em.getTransaction().commit();
     }

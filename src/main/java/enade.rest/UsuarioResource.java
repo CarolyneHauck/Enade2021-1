@@ -22,7 +22,7 @@ import enade.model.Usuario;
 /**
  *
  * @author carolyne.carreira
- */
+
 @Path("usuario")
 public class UsuarioResource {
 
@@ -88,3 +88,4 @@ public class UsuarioResource {
         }
     }
 }
+ */
